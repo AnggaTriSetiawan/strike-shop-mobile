@@ -1,16 +1,29 @@
-# strike_shop
+Tugas 7
+----------------------------------------------------------
+1) Dalam Flutter, seluruh tampilan yang muncul di layar tersusun dari widget. Setiap elemen seperti teks, tombol, gambar, maupun tata letak merupakan widget yang saling berhubungan membentuk struktur hierarki yang disebut widget tree. Setiap widget dapat memiliki parent (induk) dan child (anak). Widget induk membungkus widget anak dan mengatur bagaimana anak tersebut ditampilkan. Dalam tugas ini misalnya, MaterialApp menjadi parent utama yang menaungi seluruh struktur aplikasi. Di dalamnya terdapat Scaffold sebagai parent untuk elemen seperti AppBar dan body. Lalu di dalam body, terdapat Column yang menjadi induk bagi Row, Center, dan GridView, yang masing-masing berisi child seperti InfoCard, Text, serta ItemCard. Hubungan bertingkat ini memungkinkan Flutter menggambar dan mengatur tampilan dengan efisien, serta memudahkan pengembang memahami struktur antarelemen di layar.
 
-A new Flutter project.
+2) Aplikasi ini diawali dengan runApp(const MyApp()) yang menjalankan widget utama bernama MyApp. Widget ini merupakan sebuah StatelessWidget yang berfungsi sebagai titik awal aplikasi. Di dalamnya terdapat widget MaterialApp, yang menjadi kerangka utama aplikasi berbasis Material Design. MaterialApp mengatur judul aplikasi, tema warna menggunakan ThemeData, dan menentukan halaman awal aplikasi melalui properti home yang diarahkan ke MyHomePage.
 
-## Getting Started
+Widget Scaffold digunakan di dalam MyHomePage untuk memberikan struktur dasar halaman seperti area AppBar dan body. Di bagian atas halaman, terdapat AppBar yang menampilkan judul “Strike Shop” dengan teks putih dan tebal, serta warna latar yang diambil dari skema warna tema aplikasi.
 
-This project is a starting point for a Flutter application.
+Bagian body dibungkus dengan widget Padding agar seluruh konten di dalamnya memiliki jarak dari tepi layar. Konten utama diatur menggunakan Column, yang menyusun widget secara vertikal. Di dalam kolom ini, terdapat Row yang digunakan untuk menampilkan tiga buah InfoCard secara horizontal, masing-masing menampilkan informasi NPM, Nama, dan Kelas.
 
-A few resources to get you started if this is your first Flutter project:
+Widget InfoCard sendiri merupakan custom widget berbasis StatelessWidget yang menggunakan Card sebagai elemen visual utama. Setiap Card menampilkan dua Text, yaitu judul (title) dan isi (content), yang disusun secara vertikal dalam Column, dengan tambahan SizedBox untuk memberi jarak antar elemen.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Setelah barisan kartu informasi tersebut, terdapat SizedBox sebagai jarak vertikal, lalu sebuah Center yang berisi Column untuk menampilkan teks sambutan “Selamat datang di Strike Shop” menggunakan widget Text dengan gaya tebal dan ukuran huruf 18.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Selanjutnya, ditampilkan GridView.count untuk menampilkan kumpulan menu utama aplikasi dalam bentuk kisi 3 kolom. Setiap item pada grid diambil dari daftar items yang berisi objek ItemHomepage, yaitu kelas model sederhana yang menyimpan atribut nama, ikon, dan warna dari setiap menu.
+
+Untuk setiap item pada daftar items, dibuat sebuah ItemCard, yang juga merupakan custom widget. ItemCard menampilkan ikon dan nama menu di dalam kartu berwarna yang diambil dari atribut color. Kartu ini dibungkus oleh widget Material agar memiliki efek ink ripple ketika ditekan, dan menggunakan InkWell untuk mendeteksi aksi sentuhan pengguna. Saat ditekan, widget ini memunculkan pesan SnackBar melalui ScaffoldMessenger.of(context), yang menampilkan teks seperti “Kamu telah menekan tombol All Products!”.
+
+Selain itu, widget Icon digunakan untuk menampilkan simbol grafis sesuai kategori (misalnya Icons.store, Icons.archive, dan Icons.add), dan Text digunakan untuk menampilkan nama menu. Padding di beberapa bagian membantu mengatur jarak antar elemen agar tampilan lebih rapi dan tidak terlalu berdekatan satu sama lain.
+
+3) MaterialApp adalah widget yang berfungsi sebagai akar (root) dari aplikasi berbasis Material Design. Widget ini mengatur tema aplikasi, warna utama, skema warna sekunder, judul aplikasi, serta halaman awal yang akan ditampilkan. Dalam proyek ini, MaterialApp digunakan di kelas MyApp untuk menentukan judul aplikasi "Flutter Demo", menerapkan tema warna biru, dan menentukan halaman awal (home) berupa MyHomePage. Dengan menempatkannya di paling atas struktur aplikasi, semua widget di bawahnya dapat mengakses konteks global dan gaya desain Material Design, seperti efek ripple, AppBar, dan SnackBar. Karena itu, MaterialApp hampir selalu digunakan sebagai widget root dalam aplikasi Flutter.
+
+4) Widget dalam Flutter terbagi menjadi dua jenis utama: StatelessWidget dan StatefulWidget. StatelessWidget adalah widget yang tidak memiliki state, artinya tampilannya tidak berubah selama aplikasi berjalan. Widget jenis ini cocok digunakan untuk elemen statis seperti teks, ikon, atau tampilan informasi tetap. Sebaliknya, StatefulWidget memiliki state yang dapat berubah seiring waktu, misalnya karena interaksi pengguna atau perubahan data. Ketika state berubah, Flutter akan memanggil kembali metode build() untuk memperbarui tampilan.
+
+Dalam proyek ini, semua widget seperti MyApp, MyHomePage, InfoCard, dan ItemCard adalah StatelessWidget karena seluruh data yang ditampilkan bersifat tetap dan tidak berubah selama aplikasi berjalan. Jika di masa depan ditambahkan fitur dinamis seperti form input, penghitungan jumlah item, atau daftar produk yang dapat diperbarui, maka StatefulWidget akan menjadi pilihan yang tepat.
+
+5) BuildContext adalah objek yang menyimpan informasi tentang posisi suatu widget di dalam widget tree. Ia sangat penting karena memungkinkan widget untuk mengetahui letaknya, berinteraksi dengan parent-nya, serta mengakses data global seperti tema, ukuran layar, atau navigasi. Dalam proyek ini, BuildContext digunakan di setiap metode build(), dan juga dimanfaatkan di dalam widget ItemCard pada bagian ScaffoldMessenger.of(context) untuk menampilkan SnackBar ketika sebuah kartu ditekan. Dengan memanfaatkan BuildContext, Flutter dapat menentukan secara tepat di mana tampilan atau interaksi tertentu harus dijalankan di dalam struktur aplikasi.
+
+6) Flutter menyediakan dua fitur utama untuk mempercepat proses pengembangan, yaitu hot reload dan hot restart. Hot reload memungkinkan pengembang melihat perubahan kode secara instan tanpa kehilangan state aplikasi yang sedang berjalan. Misalnya, ketika mengubah warna tombol, teks sambutan, atau ikon dalam ItemCard, hasilnya langsung terlihat setelah menekan tombol hot reload. Sebaliknya, hot restart akan menjalankan ulang seluruh aplikasi dari awal, menghapus semua data sementara yang tersimpan. Fitur ini berguna jika ada perubahan besar pada struktur kode seperti penambahan variabel global atau penggantian halaman awal aplikasi. Kedua fitur ini membuat proses pengembangan aplikasi Flutter jauh lebih cepat dan efisien.

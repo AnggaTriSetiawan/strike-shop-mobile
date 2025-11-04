@@ -9,9 +9,9 @@ class MyHomePage extends StatelessWidget {
     final String kelas = "F";
 
     final List<ItemHomepage> items = [
-      ItemHomepage("All products", Icons.newspaper, Colors.blue),
-      ItemHomepage("My Products", Icons.add, Colors.green),
-      ItemHomepage("Create Product", Icons.logout, Colors.red),
+      ItemHomepage("All Products", Icons.store, Colors.blue),
+      ItemHomepage("My Products", Icons.archive, Colors.green),
+      ItemHomepage("Create Product", Icons.add, Colors.red),
     ];
 
     @override
@@ -19,9 +19,9 @@ class MyHomePage extends StatelessWidget {
         return Scaffold(
       // AppBar adalah bagian atas halaman yang menampilkan judul.
       appBar: AppBar(
-        // Judul aplikasi "Football News" dengan teks putih dan tebal.
+        // Judul aplikasi "Strike Shop" dengan teks putih dan tebal.
         title: const Text(
-          'Football News',
+          'Strike Shop',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -54,7 +54,6 @@ class MyHomePage extends StatelessWidget {
             Center(
               child: Column(
                 // Menyusun teks dan grid item secara vertikal.
-
                 children: [
                   // Menampilkan teks sambutan dengan gaya tebal dan ukuran 18.
                   const Padding(
