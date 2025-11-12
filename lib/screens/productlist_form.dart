@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:strike_shop/widgets/left_drawer.dart';
+import 'package:strike_shop/screens/menu.dart';
 
 class ProductFormPage extends StatefulWidget {
   const ProductFormPage({super.key});
@@ -245,6 +246,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                                   onPressed: () {
                                     Navigator.pop(context);
                                     _formKey.currentState!.reset();
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage()));
                                   },
                                 ),
                               ],
