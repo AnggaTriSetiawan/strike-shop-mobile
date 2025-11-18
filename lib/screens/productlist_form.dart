@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:strike_shop/widgets/left_drawer.dart';
 import 'package:strike_shop/screens/menu.dart';
+import 'dart:convert';
+import 'package:provider/provider.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
 
 class ProductFormPage extends StatefulWidget {
   const ProductFormPage({super.key});
@@ -18,6 +21,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
   String _thumbnail = "";
   String _category = "jersey"; 
   bool _isFeatured = false; 
+  String _brand = "";
 
   final List<String> _categories = [
     'jersey',
@@ -29,6 +33,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -36,7 +41,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
             'Add Product Form',
           ),
         ),
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.black,
         foregroundColor: Colors.white,
       ),
       
@@ -52,11 +57,21 @@ class _ProductFormPageState extends State<ProductFormPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  style: const TextStyle(color: Colors.white),      
+                  cursorColor: Colors.white,        
                   decoration: InputDecoration(
-                    hintText: "Nama Produk",
                     labelText: "Nama Produk",
+                    labelStyle: const TextStyle(color: Colors.white),  
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: const BorderSide(color: Colors.white),
                     ),
                   ),
                   onChanged: (String? value) {
@@ -80,12 +95,23 @@ class _ProductFormPageState extends State<ProductFormPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
-                  maxLines: 5,
+                  style: const TextStyle(color: Colors.white),    
+                  cursorColor: Colors.white,   
+                  maxLines: 1,
+
                   decoration: InputDecoration(
-                    hintText: "Harga Produk",
                     labelText: "Harga Produk",
+                    labelStyle: const TextStyle(color: Colors.white),  
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: const BorderSide(color: Colors.white),
                     ),
                   ),
                   onChanged: (String? value) {
@@ -113,12 +139,23 @@ class _ProductFormPageState extends State<ProductFormPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  style: const TextStyle(color: Colors.white),      
+                  cursorColor: Colors.white,  
                   maxLines: 5,
+
                   decoration: InputDecoration(
-                    hintText: "Deskripsi Produk",
                     labelText: "Deskripsi Produk",
+                    labelStyle: const TextStyle(color: Colors.white), 
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: const BorderSide(color: Colors.white),
                     ),
                   ),
                   onChanged: (String? value) {
@@ -142,11 +179,22 @@ class _ProductFormPageState extends State<ProductFormPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  style: const TextStyle(color: Colors.white),      
+                  cursorColor: Colors.white,   
+
                   decoration: InputDecoration(
-                    hintText: "URL Thumbnail",
                     labelText: "URL Thumbnail",
+                    labelStyle: const TextStyle(color: Colors.white),  
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: const BorderSide(color: Colors.white),
                     ),
                   ),
                   onChanged: (String? value) {
@@ -169,11 +217,22 @@ class _ProductFormPageState extends State<ProductFormPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: DropdownButtonFormField<String>(
+                  style: const TextStyle(color: Colors.white), 
+                  dropdownColor: const Color(0xFF111827),            
+
                   decoration: InputDecoration(
-                    hintText: "Kategori",
                     labelText: "Kategori",
+                    labelStyle: const TextStyle(color: Colors.white),  
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: const BorderSide(color: Colors.white54),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: const BorderSide(color: Colors.white),
                     ),
                   ),
                   initialValue: _category,
@@ -198,7 +257,10 @@ class _ProductFormPageState extends State<ProductFormPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SwitchListTile(
-                  title: const Text("Tandai sebagai Produk Unggulan"),
+                  title: const Text(
+                    "Tandai sebagai Produk Unggulan",
+                    style: TextStyle(color: Colors.white), 
+                  ),
                   value: _isFeatured,
                   onChanged: (bool value) {
                     setState(() {
@@ -208,7 +270,47 @@ class _ProductFormPageState extends State<ProductFormPage> {
                 ),
               ),
 
-              // === Tombol Simpan ===
+              // === Brand ===
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  cursorColor: Colors.white,
+                  maxLines: 1,
+
+                  decoration: InputDecoration(
+                    labelText: "Brand Produk",
+                    labelStyle: const TextStyle(color: Colors.white),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
+                  ),
+                  onChanged: (String? value) {
+                    setState(() {
+                      _brand = value!;
+                    });
+                  },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return "Brand Produk tidak boleh kosong!";
+                    }
+                    else if (value.length > 255) {
+                      return "Brand produk tidak boleh melebihi 255 karakter!";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+
+              // === Tombol Save ===
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
@@ -218,41 +320,38 @@ class _ProductFormPageState extends State<ProductFormPage> {
                       backgroundColor:
                           WidgetStateProperty.all(Colors.indigo),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title:
-                                  const Text('Produk berhasil disimpan'),
-                              content: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Nama: $_name'),
-                                    Text('Harga: $_price'),
-                                    Text('Deskripsi: $_description'),
-                                    Text('Thumbnail: $_thumbnail'),
-                                    Text('Kategori: $_category'),
-                                    Text('Unggulan: ${_isFeatured ? "Ya" : "Tidak"}'),
-                                  ],
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                  child: const Text('OK'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    _formKey.currentState!.reset();
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage()));
-                                  },
-                                ),
-                              ],
-                            );
-                          },
+                        final response = await request.postJson(
+                          "http://localhost:8000/create-flutter/",
+                          jsonEncode({
+                            "name": _name,
+                            "price" : _price,
+                            "description": _description,
+                            "thumbnail": _thumbnail,
+                            "category": _category,
+                            "is_featured": _isFeatured,
+                            "brand": _brand,
+                          }),
                         );
+                        if (context.mounted) {
+                          if (response['status'] == 'success') {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Product successfully saved!"),
+                            ));
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyHomePage()),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Something went wrong, please try again."),
+                            ));
+                          }
+                        }
                       }
                     },
                     child: const Text(

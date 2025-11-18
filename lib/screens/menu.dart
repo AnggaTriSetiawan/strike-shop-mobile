@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:strike_shop/widgets/left_drawer.dart';
-import 'package:strike_shop/screens/productlist_form.dart';
+import 'package:strike_shop/widgets/product_card.dart';
 
 class MyHomePage extends StatelessWidget {
     MyHomePage({super.key});
 
-    
     final String nama = "Angga Tri Setiawan";
     final String npm = "2406350614";
     final String kelas = "F";
@@ -14,6 +13,7 @@ class MyHomePage extends StatelessWidget {
       ItemHomepage("All Products", Icons.store, Colors.blue),
       ItemHomepage("My Products", Icons.archive, Colors.green),
       ItemHomepage("Create Product", Icons.add, Colors.red),
+      ItemHomepage("Logout", Icons.logout, Colors.black),
     ];
 
     @override
@@ -27,7 +27,7 @@ class MyHomePage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            backgroundColor: Theme.of(context).colorScheme.primary,
+             backgroundColor: Colors.black,
           ),
           drawer: LeftDrawer(),
           body: Padding(
@@ -54,6 +54,7 @@ class MyHomePage extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18.0,
+                        color: Colors.white, 
                       ),
                     ),
                   ),
@@ -62,7 +63,7 @@ class MyHomePage extends StatelessWidget {
                     padding: const EdgeInsets.all(20),
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
-                    crossAxisCount: 3,
+                    crossAxisCount: 4,
                     shrinkWrap: true,
                     children: items.map((ItemHomepage item) {
                         return ItemCard(item);
@@ -87,6 +88,7 @@ class InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: const Color(0xFF4B5563), 
       elevation: 2.0,
       child: Container(
         width: MediaQuery.of(context).size.width / 3.5, 
@@ -95,10 +97,18 @@ class InfoCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white, 
+              ),
             ),
             const SizedBox(height: 8.0),
-            Text(content),
+            Text(
+              content,
+              style: const TextStyle(
+                color: Colors.white, 
+              ),
+            ),
           ],
         ),
       ),
@@ -112,56 +122,4 @@ class ItemHomepage {
  final Color color;
 
  ItemHomepage(this.name, this.icon, this.color);
-}
-
-class ItemCard extends StatelessWidget {
-  final ItemHomepage item; 
-
-  const ItemCard(this.item, {super.key}); 
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: item.color,
-      borderRadius: BorderRadius.circular(12),
-
-      child: InkWell(
-        onTap: () {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text("Kamu telah menekan tombol ${item.name}!"))
-            );
-
-          if (item.name == "Create Product") {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const ProductFormPage()),
-            );
-          }
-        },
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  item.icon,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                const Padding(padding: EdgeInsets.all(3)),
-                Text(
-                  item.name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }
